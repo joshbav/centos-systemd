@@ -66,7 +66,7 @@ CMD  ["/usr/sbin/init"]
 # using ??? systemd service
 RUN mkdir /autofs
 RUN echo "/autofs /etc/auto.misc --timeout=0" >> /etc/auto.master
-RUN echo "autofs -rw 172.31.7.236:/nfsshare" >> /etc/auto.misc
+RUN echo "test -rw 172.31.7.236:/nfsshare" >> /etc/auto.misc
 
 COPY configure-nfs.sh /configure-nfs.sh
 RUN chmod 777 /configure-nfs.sh
