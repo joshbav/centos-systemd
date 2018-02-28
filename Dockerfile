@@ -98,4 +98,4 @@ RUN chmod +x /configure-nfs.sh
 # I'm using systemd since it's handy and I know it. https://github.com/krallin/tini may be used instead.
 # https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900
 # and https://www.freedesktop.org/software/systemd/man/systemd.html
-CMD  ["/usr/lib/systemd/systemd", "--system"]
+CMD  ["/usr/lib/systemd/systemd", "--user"]
