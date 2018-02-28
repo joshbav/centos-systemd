@@ -1,11 +1,4 @@
-# This is Josh's centos7 systemd base container. It has a few common utilities and python 3.4.
-# Note version pinning. This is for reproducability in the future. 
-# If this dockerfile is old, then it will create a container with old utilties.
-
-# latest centos 7.4 as of 2-22-18
 FROM centos/systemd
-
-#ENTRYPOINT bash
 
 ENV term=xterm
 ENV container docker
