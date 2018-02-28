@@ -3,8 +3,8 @@ FROM centos/systemd
 ENV term=xterm
 ENV container docker
 
+RUN yum install -y deltarpm
 RUN yum update -y
-RUN yum install -y deltarpm 
 RUN yum install -y systemd-libs epel-release yum-tools autofs nfs-utils ca-certificates man
 
 RUN yum install -y \

@@ -1,4 +1,4 @@
-docker build joshbav/centos-systemd:latest .
+docker build -t joshbav/centos-systemd:latest .
 echo
 echo
 echo
