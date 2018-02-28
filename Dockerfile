@@ -57,7 +57,7 @@ RUN systemctl enable dbus.service
 # supposedly fixed in newer autofs ver autofs-5.0.7-73.el7/
 RUN yum install -y libsss_autofs
 
-CMD  ["/usr/sbin/init"]
+# CMD  ["/usr/sbin/init"]
 #### END OF SYSTEMD
 
 #### AUTOFS
@@ -91,4 +91,5 @@ RUN chmod +x /configure-nfs.sh
 
 #### RUN yum clean all
 
-
+### LAB WORK
+CMD  ["unshare -p", "/usr/sbin/init"]

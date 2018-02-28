@@ -1,4 +1,4 @@
-docker build --squash -t joshbav/centos-systemd:latest .
+docker build joshbav/centos-systemd:latest .
 echo
 echo
 echo
