@@ -92,7 +92,10 @@ RUN chmod +x /configure-nfs.sh
 #### RUN yum clean all
 
 ### LAB WORK
-# Unshare is necessary since systemd wants to be process ID 1, and the mesos containerizer does its own init
+# systemd wants to be process ID 1, and the mesos containerizer does its own init
 # process, thus it takes up PID 1. systemd wasn't intended to be in a container.
+# this is for a POC lab and the final production use case may not even need/want systemd
+# I'm using systemd since it's handy and I know it. https://github.com/krallin/tini may be used instead.
 # https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900
-CMD  ["/usr/lib/systemd/systemd --system"]
+# and https://www.freedesktop.org/software/systemd/man/systemd.html
+CMD  ["/usr/lib/systemd/systemd", "--system"]
