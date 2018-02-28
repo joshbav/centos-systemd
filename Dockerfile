@@ -28,7 +28,7 @@ bzip2-1.0.6-13.el7.x86_64
 #python34-setuptools-19.2-3.el7.noarch \
 #python34-pip-8.1.2-5.el7.noarch 
 
-#### CONFIGURE SYSTEMD
+#### SYSTEMD
 VOLUME ["/run"]
 
 RUN systemctl mask \ 
@@ -61,9 +61,12 @@ CMD  ["/usr/sbin/init"]
 #### END OF SYSTEMD
 
 #### AUTOFS
+# Note the autofs.service is not set to enable in systemd
+# this is because we will first create its config file on startup
+# using ??? systemd service
 RUN mkdir /autofs
 RUN echo "/autofs /etc/auto.misc --timeout=0" >> /etc/auto.master
-RUN echo "autofs -fstype=nfs3,rw,nosuid,hard,tcp,timeo=60 172.31.7.236:/nfsshare" >> /etc/auto.misc
+RUN echo "autofs -rw 172.31.7.236:/nfsshare" >> /etc/auto.misc
 
 COPY configure-nfs.sh /configure-nfs.sh
 RUN chmod 777 /configure-nfs.sh
