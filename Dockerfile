@@ -70,17 +70,16 @@ RUN yum install -y libsss_autofs
 CMD unshare -p -f --mount-proc=/proc /usr/lib/systemd/systemd --system
 #### END OF SYSTEMD
 
-#### AUTOFS
+#### AUTOFS --- moved to tractor, TODO delete
 # Note the autofs.service is not set to enable in systemd
 # this is because we will first create its config file on startup
 # using ??? systemd service
-RUN mkdir /autofs
-RUN echo "/autofs /etc/auto.misc --timeout=0" >> /etc/auto.master
-RUN echo "test -rw 172.31.7.236:/nfsshare" >> /etc/auto.misc
-
-COPY configure-nfs.sh /configure-nfs.sh
-RUN chmod 777 /configure-nfs.sh
-RUN chmod +x /configure-nfs.sh
+#RUN mkdir /autofs
+#RUN echo "/autofs /etc/auto.misc --timeout=0" >> /etc/auto.master
+#RUN echo "test -rw 172.31.7.236:/nfsshare" >> /etc/auto.misc
+#COPY configure-nfs.sh /configure-nfs.sh
+#RUN chmod 777 /configure-nfs.sh
+#RUN chmod +x /configure-nfs.sh
 ####
 
 ## not used yum install -y # mc git openssl nmap gcc-4.8.5-16.el7_4.1 
