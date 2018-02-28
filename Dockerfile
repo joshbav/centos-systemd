@@ -1,3 +1,4 @@
+# TODO: pin container version
 FROM centos/systemd
 
 ENV term=xterm
@@ -7,6 +8,7 @@ ENV container docker
 RUN yum update -y
 RUN yum install -y systemd-libs epel-release yum-tools autofs nfs-utils ca-certificates man
 
+# TODO: Pin systemd versions. 
 RUN yum install -y \
 vim-enhanced-7.4.160-2.el7.x86_64 \ 
 nano-2.3.1-10.el7.x86_64 \
@@ -23,10 +25,9 @@ iproute-3.10.0-87.el7.x86_64 \
 bind-utils-9.9.4-51.el7_4.2  \
 unzip-6.0-16.el7.x86_64 \
 zip-3.0-11.el7.x86_64 \
-bzip2-1.0.6-13.el7.x86_64 
-
-#python34-setuptools-19.2-3.el7.noarch \
-#python34-pip-8.1.2-5.el7.noarch 
+bzip2-1.0.6-13.el7.x86_64 \ 
+python34-setuptools-19.2-3.el7.noarch \
+python34-pip-8.1.2-5.el7.noarch 
 
 #### SYSTEMD
 VOLUME ["/run"]
@@ -57,7 +58,16 @@ RUN systemctl enable dbus.service
 # supposedly fixed in newer autofs ver autofs-5.0.7-73.el7/
 RUN yum install -y libsss_autofs
 
-# CMD  ["/usr/sbin/init"]
+# systemd wants to be process ID 1, and the mesos containerizer (Uniersal Container Runtime) does its own init
+# process, thus it takes up PID 1. systemd wasn't intended to be in a container.
+# UCR is likely needed for this project for GPU support.
+# This is for a POC lab and the final production use case may not even need/want systemd, 
+# I'm using systemd since it's handy and I know it. 
+# A cleaner simpler init system is https://github.com/krallin/tini
+# https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900
+# and https://www.freedesktop.org/software/systemd/man/systemd.html
+# CMD will be executed by default when the container starts up, and will start systemd
+CMD unshare -p -f --mount-proc=/proc /usr/lib/systemd/systemd --system
 #### END OF SYSTEMD
 
 #### AUTOFS
@@ -76,8 +86,8 @@ RUN chmod +x /configure-nfs.sh
 ## not used yum install -y # mc git openssl nmap gcc-4.8.5-16.el7_4.1 
 
 #### PYTHON
-#RUN pip3 install --upgrade pip
-#RUN pip3 install virtualenv
+RUN pip3 install --upgrade pip
+RUN pip3 install virtualenv
 ####
 
 #### JAVA 1.9
