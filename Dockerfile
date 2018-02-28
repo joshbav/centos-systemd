@@ -55,7 +55,7 @@ RUN systemctl enable dbus.service
 
 # to deal with an autofs bug https://bugzilla.redhat.com/show_bug.cgi?id=1489648
 # supposedly fixed in newer autofs ver autofs-5.0.7-73.el7/
-yum install -y libsss_autofs
+RUN yum install -y libsss_autofs
 
 CMD  ["/usr/lib/systemd/systemd --system"]
 #### END OF SYSTEMD
