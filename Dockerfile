@@ -3,7 +3,7 @@ FROM centos/systemd
 ENV term=xterm
 ENV container docker
 
-RUN yum install -y deltarpm
+#RUN yum install -y deltarpm
 RUN yum update -y
 RUN yum install -y systemd-libs epel-release yum-tools autofs nfs-utils ca-certificates man
 
@@ -98,4 +98,4 @@ RUN chmod +x /configure-nfs.sh
 # I'm using systemd since it's handy and I know it. https://github.com/krallin/tini may be used instead.
 # https://hackernoon.com/the-curious-case-of-pid-namespaces-1ce86b6bc900
 # and https://www.freedesktop.org/software/systemd/man/systemd.html
-CMD  ["/usr/lib/systemd/systemd", "--user"]
+CMD  ["unshare -p -f --mount-proc=/proc /usr/lib/systemd/systemd --system"]
